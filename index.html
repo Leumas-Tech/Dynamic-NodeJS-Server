@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Route Tester</title>
+</head>
+<body>
+    <h1>Dynamic Route Tester</h1>
+    <form id="routeForm">
+        <input type="text" id="method" placeholder="Method (GET, POST, etc.)" required />
+        <input type="text" id="path" placeholder="Path" required />
+        <textarea id="response" placeholder="Response" required></textarea>
+        <button type="submit">Add Route</button>
+    </form>
+    <script>
+        document.getElementById('routeForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const method = document.getElementById('method').value;
+            const path = document.getElementById('path').value;
+            const response = document.getElementById('response').value;
+
+            const result = await fetch('http://localhost:3000/add-route', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ method, path, response }),
+            });
+
+            const data = await result.text();
+            alert(data);
+        };
+    </script>
+</body>
+</html>
